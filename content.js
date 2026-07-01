@@ -17,14 +17,23 @@
       'iframe[src*="doubleclick"], iframe[src*="googleads"], iframe[src*="googlesyndication"], iframe[src*="adsbygoogle"], iframe[src*="adservice"], iframe[src*="admanager"], [data-ad-slot], [data-google-query-id], [aria-label*="Advertisement" i], [alt*="Advertisement" i], [class*="adsbygoogle"], [class*="sponsor"], [class*="promo"], [class*="banner"], [class*="ad-"], [class*="-ad"], [id*="ad-"]'
     );
 
-    if (matchesAdText || matchesAdSelectors) {
-      el.style.setProperty('display', 'none', 'important');
-      el.style.setProperty('visibility', 'hidden', 'important');
-      el.style.setProperty('opacity', '0', 'important');
-      el.style.setProperty('height', '0', 'important');
-      el.style.setProperty('width', '0', 'important');
-      el.style.setProperty('pointer-events', 'none', 'important');
+    if (!matchesAdText && !matchesAdSelectors) {
+      return;
     }
+  
+   const wrapper = el.closest(
+    '[class*="ad"], [id*="ad"], [class*="sponsor"], [class*="promo"], [class*="banner"], .am-entry, [id^="vxxh"], [id^="iframeVideoWrapper"]'
+) || el;
+
+  wrapper.style.setProperty('display', 'none', 'important');
+  wrapper.style.setProperty('visibility', 'hidden', 'important');
+  wrapper.style.setProperty('opacity', '0', 'important');
+  wrapper.style.setProperty('height', '0', 'important');
+  wrapper.style.setProperty('width', '0', 'important');
+  wrapper.style.setProperty('overflow', 'hidden', 'important');
+  wrapper.style.setProperty('margin', '0', 'important');
+  wrapper.style.setProperty('padding', '0', 'important');
+  wrapper.style.setProperty('border', '0', 'important');
   };
 
   const scanRoot = (root) => {
