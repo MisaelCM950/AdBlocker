@@ -1,0 +1,63 @@
+[
+    {
+        "id": 10000,
+        "priority": 1000,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "initiatorDomains": [
+                "oxfordlearnersdictionaries.com",
+                "oxforddictionaries.com"
+            ]
+        }
+    },
+    {
+        "id": 9996,
+        "priority": 100,
+        "action": {
+            "type": "redirect",
+            "redirect": { "extensionPath": "/dummy.js" }
+        },
+        "condition": {
+            "urlFilter": "||html-load.com",
+            "resourceTypes": ["script"]
+        }
+    },
+    {
+        "id": 9997,
+        "priority": 100,
+        "action": {
+            "type": "redirect",
+            "redirect": { "extensionPath": "/dummy.json" }
+        },
+        "condition": {
+            "urlFilter": "||html-load.com",
+            "resourceTypes": ["xmlhttprequest", "ping", "other"]
+        }
+    },
+    {
+        "id": 9998,
+        "priority": 100,
+        "action": {
+            "type": "redirect",
+            "redirect": { "extensionPath": "/dummy.js" }
+        },
+        "condition": {
+            "urlFilter": "||error-report.com",
+            "resourceTypes": ["script"]
+        }
+    },
+    {
+        "id": 9999,
+        "priority": 100,
+        "action": {
+            "type": "redirect",
+            "redirect": { "extensionPath": "/dummy.json" }
+        },
+        "condition": {
+            "urlFilter": "||error-report.com",
+            "resourceTypes": ["xmlhttprequest", "ping", "other"]
+        }
+    }
+]

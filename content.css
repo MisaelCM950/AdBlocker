@@ -1,0 +1,24 @@
+iframe[src*="doubleclick"],
+iframe[src*="googleads"],
+iframe[src*="googlesyndication"],
+iframe[src*="adsbygoogle"],
+iframe[src*="adservice"],
+iframe[src*="admanager"],
+[data-ad-slot],
+[data-google-query-id],
+[aria-label*="Advertisement" i],
+[alt*="Advertisement" i],
+[class*="adsbygoogle"],
+[class*="sponsor"],
+[class*="promo"],
+[class*="banner"],
+[class*="ad-"],
+[class*="-ad"],
+[id*="ad-"] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  width: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
