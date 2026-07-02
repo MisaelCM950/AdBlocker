@@ -1,35 +1,33 @@
-iframe[src*="doubleclick"],
-iframe[src*="googleads"],
-iframe[src*="googlesyndication"],
-iframe[src*="adsbygoogle"],
-iframe[src*="adservice"],
-iframe[src*="admanager"],
-iframe[id^="iframeVideoWrapper"],
-div.am-entry,
-div[id^="vxxh"],
-div[style*="transition: height"],
-div[style*="overflow: auto hidden"],
-div[style*="height: 0.1px"],
-[data-ad-slot],
-[data-google-query-id],
-[aria-label*="Advertisement" i],
-[alt*="Advertisement" i],
-[class*="ad-container"],
-[class*="ad-slot"],
-[class*="ad-wrapper"],
-[class*="adsbygoogle"],
-[class*="sponsor"],
-[class*="promo"],
-[class*="banner"],
-[class*="ad-"],
-[class*="-ad"],
-[id*="ad-"],
-[id*="-ad"] {
+html.adblocker-enabled .adblocker-hidden,
+html.adblocker-enabled iframe[src*="doubleclick"],
+html.adblocker-enabled iframe[src*="googleads"],
+html.adblocker-enabled iframe[src*="googlesyndication"],
+html.adblocker-enabled iframe[src*="adsbygoogle"],
+html.adblocker-enabled iframe[src*="adservice"],
+html.adblocker-enabled iframe[src*="admanager"],
+html.adblocker-enabled iframe[id^="iframeVideoWrapper"],
+html.adblocker-enabled div.am-entry,
+html.adblocker-enabled div[id^="vxxh"],
+html.adblocker-enabled [data-ad-slot],
+html.adblocker-enabled [data-google-query-id],
+html.adblocker-enabled [aria-label*="Advertisement" i],
+html.adblocker-enabled [alt*="Advertisement" i],
+html.adblocker-enabled [class*="ad-container"],
+html.adblocker-enabled [class*="ad-slot"],
+html.adblocker-enabled [class*="ad-wrapper"],
+html.adblocker-enabled [class*="adsbygoogle"],
+html.adblocker-enabled [class*="sponsor"],
+html.adblocker-enabled [class*="promo"],
+html.adblocker-enabled [class*="banner"],
+html.adblocker-enabled [class*="ad-"],
+html.adblocker-enabled [class*="-ad"],
+html.adblocker-enabled [id*="ad-"],
+html.adblocker-enabled [id*="-ad"] {
   display: none !important;
   visibility: hidden !important;
+  opacity: 0 !important;
   height: 0 !important;
   width: 0 !important;
-  opacity: 0 !important;
   overflow: hidden !important;
   margin: 0 !important;
   padding: 0 !important;

@@ -1,6 +1,33 @@
 (() => {
-  const adPattern = /(^|[-_\s])(ad|ads|adslot|advert|advertisement|sponsor|promo|banner|gpt|gslot)([-_\s]|$)/i;
-  const providerPattern = /google_ads|doubleclick|googlesyndication|googads|pubmatic|criteo|amazon-ads|adservice|admanager|adsbygoogle/i;
+  const HIDDEN_CLASS = 'adblocker-hidden';
+  const adSelector = [
+    'iframe[src*="doubleclick"]',
+    'iframe[src*="googleads"]',
+    'iframe[src*="googlesyndication"]',
+    'iframe[src*="adsbygoogle"]',
+    'iframe[src*="adservice"]',
+    'iframe[src*="admanager"]',
+    'iframe[id^="iframeVideoWrapper"]',
+    'div.am-entry',
+    'div[id^="vxxh"]',
+    '[data-ad-slot]',
+    '[data-google-query-id]',
+    '[aria-label*="Advertisement" i]',
+    '[alt*="Advertisement" i]',
+    '[class*="ad-container"]',
+    '[class*="ad-slot"]',
+    '[class*="ad-wrapper"]',
+    '[class*="adsbygoogle"]',
+    '[class*="sponsor"]',
+    '[class*="promo"]',
+    '[class*="banner"]',
+    '[class*="ad-"]',
+    '[class*="-ad"]',
+    '[id*="ad-"]',
+    '[id*="-ad"]'
+  ].join(', ');
+
+  let observer = null;
 
   const hideElement = (el) => {
     if (!(el instanceof Element)) return;
@@ -12,28 +39,15 @@
       text = '';
     }
 
+    const adPattern = /(^|[-_\s])(ad|ads|adslot|advert|advertisement|sponsor|promo|banner|gpt|gslot)([-_\s]|$)/i;
+    const providerPattern = /google_ads|doubleclick|googlesyndication|googads|pubmatic|criteo|amazon-ads|adservice|admanager|adsbygoogle/i;
     const matchesAdText = adPattern.test(text) || providerPattern.test(text);
-    const matchesAdSelectors = el.matches(
-      'iframe[src*="doubleclick"], iframe[src*="googleads"], iframe[src*="googlesyndication"], iframe[src*="adsbygoogle"], iframe[src*="adservice"], iframe[src*="admanager"], [data-ad-slot], [data-google-query-id], [aria-label*="Advertisement" i], [alt*="Advertisement" i], [class*="adsbygoogle"], [class*="sponsor"], [class*="promo"], [class*="banner"], [class*="ad-"], [class*="-ad"], [id*="ad-"]'
-    );
+    const matchesAdSelectors = el.matches(adSelector);
 
-    if (!matchesAdText && !matchesAdSelectors) {
-      return;
-    }
-  
-   const wrapper = el.closest(
-    '[class*="ad"], [id*="ad"], [class*="sponsor"], [class*="promo"], [class*="banner"], .am-entry, [id^="vxxh"], [id^="iframeVideoWrapper"]'
-) || el;
+    if (!matchesAdText && !matchesAdSelectors) return;
 
-  wrapper.style.setProperty('display', 'none', 'important');
-  wrapper.style.setProperty('visibility', 'hidden', 'important');
-  wrapper.style.setProperty('opacity', '0', 'important');
-  wrapper.style.setProperty('height', '0', 'important');
-  wrapper.style.setProperty('width', '0', 'important');
-  wrapper.style.setProperty('overflow', 'hidden', 'important');
-  wrapper.style.setProperty('margin', '0', 'important');
-  wrapper.style.setProperty('padding', '0', 'important');
-  wrapper.style.setProperty('border', '0', 'important');
+    const target = el.closest(adSelector) || el;
+    target.classList.add(HIDDEN_CLASS);
   };
 
   const scanRoot = (root) => {
@@ -41,16 +55,59 @@
     root.querySelectorAll('iframe,div,section,aside,article,span,a,li').forEach(hideElement);
   };
 
-  const observer = new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      for (const node of mutation.addedNodes) {
-        if (!(node instanceof Element)) continue;
-        hideElement(node);
-        scanRoot(node);
+  const clearHidden = () => {
+    document.querySelectorAll(`.${HIDDEN_CLASS}`).forEach((node) => node.classList.remove(HIDDEN_CLASS));
+  };
+
+  function startBlocking() {
+    if (observer) return;
+
+    observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (!(node instanceof Element)) continue;
+          hideElement(node);
+          scanRoot(node);
+        }
       }
+    });
+
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    scanRoot(document);
+  }
+
+  function stopBlocking() {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+    clearHidden();
+  }
+
+  function setEnabled(enabled) {
+    document.documentElement.classList.toggle('adblocker-enabled', enabled);
+
+    if (enabled) {
+      startBlocking();
+    } else {
+      stopBlocking();
+    }
+  }
+
+  chrome.storage.local.get({ enabled: true }, ({ enabled }) => {
+    setEnabled(Boolean(enabled));
+  });
+
+  chrome.storage.onChanged.addListener((changes) => {
+    if (changes.enabled) {
+      setEnabled(Boolean(changes.enabled.newValue));
     }
   });
 
-  observer.observe(document.documentElement, { childList: true, subtree: true });
-  scanRoot(document);
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message?.type === 'SET_ENABLED') {
+    setEnabled(Boolean(message.enabled));
+    sendResponse({ ok: true });
+  }
+});
 })();
