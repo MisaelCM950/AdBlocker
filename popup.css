@@ -1,24 +1,72 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    width: 240px;
+    width: 500px;
+    height: 500px;
+    background-color: #002439;
 }
 .container {
-    padding: 16px
+    padding: 16px;
+    text-align: center;
 }
 button {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
+    margin-top: 50px;
+    width: 180px;
+    height: 180px;
+    padding: 0px;
+    font-size: 42px;
     cursor: pointer;
-    border: none;
-    border-radius: 6px;
-    color: white;
+    border: solid rgb(31, 154, 202);
+    border-radius: 50%;
+    color: rgb(12, 224, 231);
     font-weight: bold;
 }
 button.on{
-    background-color: #2e7d32;
+    background-color: #005066;
 }
 button.off {
-    background-color: #c62828;
+    background-color: #4e7988;
+}
+.header{
+ color: #78cce2;
+}
+#status{
+    color: #e4eff0 ;
+}
+#status.disabled{
+    color: #e4eff0 ;
+}
+.footer {
+    margin-top: 100px;
+    text-align: center;
+    height: 24px;
+}
+.footer-text {
+    color:#e4eff0;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 0;
+}
+.footer-links {
+    position: relative;
+    width: 100%;
+}
+.footer-left,
+.footer-right,
+.footer-center {
+    position: absolute;
+    top: 0;
+}
+.footer-left {
+    left: 16px;
+}
+.footer-right {
+    right: 16px;
+}
+.footer-center:hover {
+    text-decoration: underline;
+}
+.footer-center {
+   left: 50%;
+   transform: translateX(-50%);
 }

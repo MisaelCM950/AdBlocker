@@ -3,7 +3,8 @@ const toggleButton = document.getElementById('toggle');
 
 const updateUI = (enabled) => {
   statusEl.textContent = enabled ? 'Enabled' : 'Disabled';
-  toggleButton.textContent = enabled ? 'Turn off' : 'Turn on';
+  statusEl.classList.toggle('disabled', !enabled);
+  toggleButton.textContent = enabled ? '⏻' : '⏼';
   toggleButton.classList.toggle('on', enabled);
   toggleButton.classList.toggle('off', !enabled);
 };
