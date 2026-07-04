@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "My Custom Ad Blocker",
+  "name": "Ad Blocker",
   "version": "1.0",
   "description": "Blocks distracting ads and hides ad elements.",
   "permissions":["storage", "activeTab"],
