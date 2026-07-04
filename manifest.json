@@ -3,7 +3,12 @@
   "name": "Ad Blocker",
   "version": "1.0",
   "description": "Blocks distracting ads and hides ad elements.",
-  "permissions":["storage", "activeTab"],
+  "permissions": ["storage", "activeTab"],
+  "icons": {
+    "16": "icons/logoadblocker.png",
+    "48": "icons/logoadblocker.png",
+    "128": "icons/logoadblocker.png"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_title": "Ad Blocker"
